@@ -29,12 +29,14 @@ class Move < RaohTrigger::Base
 end
 
 move = Move.new
-move.run(2)
+puts move.run(2)
+=> 14
 puts move.step
 => 14
-move.walk(2)
-puts move.step
+puts move.walk(2)
 => 16
+puts move.step
+=> 26
 ```
 
 ## Installation
