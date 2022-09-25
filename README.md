@@ -41,7 +41,9 @@ puts move.step
 
 ## Installation
 
-TODO
+```console
+$ gem install raoh_trigger
+```
 
 ## Options
 
