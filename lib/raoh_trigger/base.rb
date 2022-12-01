@@ -7,8 +7,13 @@ module RaohTrigger
     AFTER = :after
 
     class << self
-      @@recorded_triggers = []
-      @@options_action = { only: %i[], except: %i[], args: [] }
+      def recorded_triggers
+        @recorded_triggers ||= []
+      end
+
+      def options_action
+        @options_action ||= { only: %i[], except: %i[], args: [] }
+      end
 
       def before_action(method_name, options = {})
         add_action(BEFORE, method_name, options)
@@ -19,12 +24,12 @@ module RaohTrigger
       end
 
       def add_action(scope, method_name, options)
-        options = @@options_action.merge(options)
+        options = options_action.merge(options)
         args = options.delete(:args)
         scoped_method_names = options.delete(:only)
         unscoped_method_names = options.delete(:except)
 
-        @@recorded_triggers << RecordedTrigger.new(scope, method_name, args, scoped_method_names, unscoped_method_names)
+        recorded_triggers << RecordedTrigger.new(scope, method_name, args, scoped_method_names, unscoped_method_names)
       end
     end
 
@@ -78,9 +83,9 @@ module RaohTrigger
     end
 
     def format_recorded_triggers
-      all_recorded_trigger_method_names = @@recorded_triggers.map(&:method_name)
+      all_recorded_trigger_method_names = self.class.recorded_triggers.map(&:method_name)
 
-      @@recorded_triggers.select do |recorded_trigger|
+      self.class.recorded_triggers.select do |recorded_trigger|
         recorded_trigger.scoped_method_names.empty?
       end.each do |recorded_trigger|
         recorded_trigger.scoped_method_names = defined_methods - recorded_trigger.unscoped_method_names - all_recorded_trigger_method_names
@@ -88,13 +93,13 @@ module RaohTrigger
     end
 
     def select_recorded_triggers(scope, defined_method)
-      @@recorded_triggers.select do |recorded_trigger|
+      self.class.recorded_triggers.select do |recorded_trigger|
         recorded_trigger.scope == scope && recorded_trigger.scoped_method_names.include?(defined_method)
       end
     end
 
     def all_recorded_trigger_scoped_method_names
-      @@recorded_triggers.map(&:scoped_method_names).flatten.uniq
+      self.class.recorded_triggers.map(&:scoped_method_names).flatten.uniq
     end
 
     def defined_methods
