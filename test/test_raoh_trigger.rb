@@ -5,7 +5,7 @@ require 'mocha/minitest'
 
 class TestRaohTrigger < Minitest::Test
   def test_has_version_number
-    refute_nil RaohTrigger.gem_version
+    refute_nil Raoh::Trigger.gem_version
   end
 
   def test_before_action

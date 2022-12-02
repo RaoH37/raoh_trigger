@@ -5,7 +5,7 @@ require 'raoh_trigger'
 
 require 'minitest/autorun'
 
-class Move < RaohTrigger::Base
+class Move < Raoh::Trigger::Base
   before_action :jump, only: %i[run]
   after_action :jump, only: %i[walk]
 

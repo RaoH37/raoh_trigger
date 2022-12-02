@@ -4,7 +4,7 @@ require_relative 'lib/raoh_trigger/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'raoh_trigger'
-  spec.version = RaohTrigger.gem_version
+  spec.version = Raoh::Trigger.gem_version
   spec.authors = ['Maxime Désécot']
   spec.email = ['maxime.desecot@gmail.com']
 

@@ -2,7 +2,7 @@
 Provide `before_action` and `after_action` class method
 
 ```ruby
-class Move < RaohTrigger::Base
+class Move < Raoh::Trigger::Base
   before_action :jump, only: %i[run]
   after_action :jump, only: %i[walk]
 

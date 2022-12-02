@@ -1,26 +1,28 @@
-module RaohTrigger
-  class RecordedTrigger
-    attr_reader scope: Symbol
-    attr_reader method_name: Symbol
-    attr_reader args: Array[untyped]
-    attr_reader unscoped_method_names: Array[Symbol]
-    attr_accessor scoped_method_names: Array[Symbol]
+module Raoh
+  module Trigger
+    class RecordedTrigger
+      attr_reader scope: Symbol
+      attr_reader method_name: Symbol
+      attr_reader args: Array[untyped]
+      attr_reader unscoped_method_names: Array[Symbol]
+      attr_accessor scoped_method_names: Array[Symbol]
 
-    def initialize: (Symbol scope, Symbol method_name, Array[untyped] args, Array[Symbol] scoped_method_names, Array[Symbol] unscoped_method_names) -> void
-  end
+      def initialize: (Symbol scope, Symbol method_name, Array[untyped] args, Array[Symbol] scoped_method_names, Array[Symbol] unscoped_method_names) -> void
+    end
 
-  class Base
-    def self.before_action: (Symbol method_name, Hash[Symbol, untyped] options) -> void
-    def self.after_action: (Symbol method_name, Hash[Symbol, untyped] options) -> void
-    def self.add_action: (Symbol scope, Symbol method_name, Hash[Symbol, untyped] options) -> void
+    class Base
+      def self.before_action: (Symbol method_name, Hash[Symbol, untyped] options) -> void
+      def self.after_action: (Symbol method_name, Hash[Symbol, untyped] options) -> void
+      def self.add_action: (Symbol scope, Symbol method_name, Hash[Symbol, untyped] options) -> void
 
-    def override_methods: -> void
-    def override_method: (Symbol method_name, Array[RecordedTrigger] before_triggers, Array[RecordedTrigger] after_triggers) -> void
-    def refine_method: (Symbol origin_method_name, Symbol method_name, Array[RecordedTrigger] before_triggers, Array[RecordedTrigger] after_triggers) -> void
-    def backup_original_method: (Symbol method_name) -> Symbol
-    def format_recorded_triggers: -> void
-    def select_recorded_triggers: (Symbol scope, Symbol defined_method) -> Array[RecordedTrigger]
-    def all_recorded_trigger_scoped_method_names: -> Array[Symbol]
-    def defined_methods: -> Array[RecordedTrigger]
+      def override_methods: -> void
+      def override_method: (Symbol method_name, Array[RecordedTrigger] before_triggers, Array[RecordedTrigger] after_triggers) -> void
+      def refine_method: (Symbol origin_method_name, Symbol method_name, Array[RecordedTrigger] before_triggers, Array[RecordedTrigger] after_triggers) -> void
+      def backup_original_method: (Symbol method_name) -> Symbol
+      def format_recorded_triggers: -> void
+      def select_recorded_triggers: (Symbol scope, Symbol defined_method) -> Array[RecordedTrigger]
+      def all_recorded_trigger_scoped_method_names: -> Array[Symbol]
+      def defined_methods: -> Array[RecordedTrigger]
+    end
   end
 end
